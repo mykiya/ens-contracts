@@ -10,7 +10,7 @@ require("hardhat-deploy-ethers");
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-require('dotenv').config({silent: true});
+require('dotenv').config({ silent: true });
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -45,6 +45,12 @@ module.exports = {
       url: "http://127.0.0.1:9545",
       saveDeployments: false,
       tags: ["test", "legacy", "use_root"],
+    },
+    meteora: {
+      url: 'https://meteora-evm.gatenode.cc',
+      tags: ['test', 'legacy', 'use_root'],
+      chainId: 85,
+      accounts: real_accounts,
     },
     ropsten: {
       url: `https://ropsten.infura.io/v3/${process.env.INFURA_ID}`,
@@ -85,7 +91,7 @@ module.exports = {
       default: 0,
     },
     owner: {
-      default: 1,
+      default: 0,
     },
   },
 };

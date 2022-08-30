@@ -17,7 +17,7 @@ abstract contract AddrResolver is IAddrResolver, IAddressResolver, ResolverBase 
      * @param a The address to set.
      */
     function setAddr(bytes32 node, address a) virtual external authorised(node) {
-        setAddr(node, COIN_TYPE_ETH, addressToBytes(a));
+        setAddrCoinType(node, COIN_TYPE_ETH, addressToBytes(a));
     }
 
     /**
@@ -26,14 +26,14 @@ abstract contract AddrResolver is IAddrResolver, IAddressResolver, ResolverBase 
      * @return The associated address.
      */
     function addr(bytes32 node) virtual override public view returns (address payable) {
-        bytes memory a = addr(node, COIN_TYPE_ETH);
+        bytes memory a = addrCoinType(node, COIN_TYPE_ETH);
         if(a.length == 0) {
             return payable(0);
         }
         return bytesToAddress(a);
     }
 
-    function setAddr(bytes32 node, uint coinType, bytes memory a) virtual public authorised(node) {
+    function setAddrCoinType(bytes32 node, uint coinType, bytes memory a) virtual public authorised(node) {
         emit AddressChanged(node, coinType, a);
         if(coinType == COIN_TYPE_ETH) {
             emit AddrChanged(node, bytesToAddress(a));
@@ -41,7 +41,7 @@ abstract contract AddrResolver is IAddrResolver, IAddressResolver, ResolverBase 
         _addresses[node][coinType] = a;
     }
 
-    function addr(bytes32 node, uint coinType) virtual override public view returns(bytes memory) {
+    function addrCoinType(bytes32 node, uint coinType) virtual override public view returns(bytes memory) {
         return _addresses[node][coinType];
     }
 
