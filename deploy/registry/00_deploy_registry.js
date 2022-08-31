@@ -28,10 +28,6 @@ module.exports = async ({
   await rootTx.wait()
 
   console.log('Running legacy registry scripts...')
-  // await run('legacy-registry-names', {
-  //   deletePreviousDeployments: false,
-  //   resetMemory: false,
-  // })
 
   const revertRootTx = await legacyRegistry
     .connect(await ethers.getSigner(owner))
